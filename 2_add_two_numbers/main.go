@@ -18,7 +18,7 @@ func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
 	// track carry over (e.g. 9+9 = 18, current node value = 8, carry over = 1)
 	carry := 0
 
-	for l1 != nil || l2 != nil || carry != 0 {
+	for l1 != nil || l2 != nil || carry > 0 {
 		l1v := 0
 		// if l1 has a node available, retrieve it's value
 		if l1 != nil {
@@ -31,17 +31,11 @@ func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
 			l2v = l2.Val
 		}
 
-		cVal := l1v + l2v + carry
-
-		// if the current value is above 9, get it's remainder and set the carry over
-		if cVal > 9 {
-			carry = 1
-			cVal = cVal % 10
-		} else {
-			carry = 0
-		}
-
-		c.Val = cVal
+		carry += l1v + l2v
+	
+		c.Val = carry % 10
+	
+		carry /= 10
 
 		// if there is a previous node, set it's next node to the current node (list reversal)
 		if p != nil {
