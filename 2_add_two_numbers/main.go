@@ -8,79 +8,67 @@ type ListNode struct {
 }
 
 func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
-	// sum of node values
-	sum := 0
+	// track head node
+	head := &ListNode{}
+	c := head
 
-	// multiplier, every time we traverse a node, increment by 10
-	//	example: 
-	//		iteration 1: 2 * 1 (multiplier) + 5 * 1 (multiplier)
-	//		iteration 2: 4 * 10 (multiplier) + 6 * 10 (multiplier)
-	//		iteration 3: 3 * 100 (multiplier) + 4 * 100 (multiplier)
-	multiplier := 1
-	
-	for l1 != nil || l2 != nil {
+	// variables to track across loops
+	// track previous node
+	var p *ListNode
+	// track carry over (e.g. 9+9 = 18, current node value = 8, carry over = 1)
+	carry := 0
+
+	for l1 != nil || l2 != nil || carry != 0 {
 		l1v := 0
-
-		// if node exists, get its value
+		// if l1 has a node available, retrieve it's value
 		if l1 != nil {
 			l1v = l1.Val
 		}
 
 		l2v := 0
-
-		// if node exists, get its value
+		// if l2 has a node available, retrieve it's value
 		if l2 != nil {
 			l2v = l2.Val
 		}
 
-		// add to sum
-		sum += l1v * multiplier + l2v * multiplier
+		cVal := l1v + l2v + carry
 
-		// if node exist, get its next node
+		// if the current value is above 9, get it's remainder and set the carry over
+		if cVal > 9 {
+			carry = 1
+			cVal = cVal % 10
+		} else {
+			carry = 0
+		}
+
+		c.Val = cVal
+
+		// if there is a previous node, set it's next node to the current node (list reversal)
+		if p != nil {
+			p.Next = c
+		}
+
+		// move to the next node if l1 has a current node
 		if l1 != nil {
 			l1 = l1.Next
 		}
-	
-		// if node exist, get its next node
+
+		// move to the next node if l2 has a current node
 		if l2 != nil {
 			l2 = l2.Next
 		}
 
-		multiplier *= 10
+		// set the previous node to the current node
+		p = c
+		// initialize a new current node
+		c = &ListNode{}
 	}
 
-	// modulus gives use the current node value as it's single digits (e.g. 0 to 9)
-	n := ListNode{Val: sum % 10}
-	// division by 10 and reassign to sum to move to the next value (e.g. 342 / 10 = 34)
-	//	as golang removes the remainder from integer divisions
-	sum /= 10
-
-	// loop until the sum is larger than 10
-	for sum > 0 {
-		temp := n
-		n = ListNode{Val: sum % 10, Next: &temp}
-		sum /= 10
-	}
-
-	// vars to perform list reversal
-	var curr *ListNode
-	var prev *ListNode
-	var next *ListNode
-	curr = &n
-
-	// reverse linked list
-	for curr != nil {
-		next = curr.Next
-		curr.Next = prev
-		prev = curr
-		curr = next
-	}
-	curr = prev
-
-	return curr
+	return head
 }
 
 func main() {
+	fmt.Println("EXAMPLE 1")
 	a3 := ListNode{Val: 3}
 	a2 := ListNode{Val: 4, Next: &a3}
 	a1 := ListNode{Val: 2, Next: &a2}
@@ -92,10 +80,13 @@ func main() {
 	n := addTwoNumbers(&a1, &b1)
 
 	for n != nil {
-		fmt.Printf("%+v\n", n)
+		fmt.Printf("%d,", n.Val)
 		n = n.Next
 	}
 
+	fmt.Println()
+
+	fmt.Println("EXAMPLE 2")
 	c7 := ListNode{Val: 9}
 	c6 := ListNode{Val: 9, Next: &c7}
 	c5 := ListNode{Val: 9, Next: &c6}
@@ -112,7 +103,7 @@ func main() {
 	n2 := addTwoNumbers(&c1, &d1)
 
 	for n2 != nil {
-		fmt.Printf("%+v\n", n2)
+		fmt.Printf("%d,", n2.Val)
 		n2 = n2.Next
 	}
 }
