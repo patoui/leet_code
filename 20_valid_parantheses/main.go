@@ -3,6 +3,10 @@ package main
 import "fmt"
 
 func isValid(s string) bool {
+	if len(s) < 2 {
+		return false;
+	}
+
 	var cop rune
 	var op []rune
 
@@ -10,6 +14,10 @@ func isValid(s string) bool {
 		if v == '[' || v == '(' || v == '{' {
 			op = append(op, v)
 		} else {
+			if len(op) == 0 {
+				return false
+			}
+
 			cop, op = op[len(op)-1], op[:len(op)-1]
 
 			if v == ']' && cop != '[' {
@@ -22,7 +30,7 @@ func isValid(s string) bool {
 		}
 	}
 
-	return true
+	return len(op) == 0
 }
 
 func main() {
