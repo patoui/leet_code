@@ -9,9 +9,10 @@ func isValid(s string) bool {
 
 	var cop rune
 	var op []rune
+	cm := map[rune]rune{'[': ']', '(': ')', '{': '}'}
 
 	for _, v := range s {
-		if v == '[' || v == '(' || v == '{' {
+		if _, ok := cm[v]; ok {
 			op = append(op, v)
 		} else {
 			if len(op) == 0 {
@@ -19,13 +20,10 @@ func isValid(s string) bool {
 			}
 
 			cop, op = op[len(op)-1], op[:len(op)-1]
+			c, ok := cm[cop]
 
-			if v == ']' && cop != '[' {
-				return false;
-			} else if v == ')' && cop != '(' {
-				return false;
-			} else if v == '}' && cop != '{' {
-				return false;
+			if !ok || v != c {
+				return false
 			}
 		}
 	}
