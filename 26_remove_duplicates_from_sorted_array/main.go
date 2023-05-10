@@ -3,9 +3,9 @@ package main
 import "fmt"
 
 func removeDuplicates(nums []int) int {
-	for i := 0; i < len(nums)-1; i++ {
+	for i := 0; i < len(nums); i++ {
 		dups := 0
-		for j := i+1; j < len(nums)-1; j++ {
+		for j := i+1; j < len(nums); j++ {
 			if nums[i] != nums[j] {
 				break;
 			}
@@ -39,7 +39,7 @@ func main() {
 	n2 := []int{0,0,1,1,1,2,2,3,3,4}
 	e2 := []int{0,1,2,3,4}
 	r2 := removeDuplicates(n2)
-	fmt.Printf("RESULT 1: %d\n", r2)
+	fmt.Printf("RESULT 2: %d\n", r2)
 	for i := 0; i < r2; i++ {
 		if n2[i] == e2[i] {
 			fmt.Printf("CORRECT AT %d OF %d\n", i, n2[i])
@@ -47,5 +47,19 @@ func main() {
 	    	fmt.Printf("INCORRECT AT %d OF %d, SHOULD BE: %d\n", i, n2[i], e2[i])
 	    }
 	}
-	fmt.Println();
+	fmt.Printf("\n\n");
+
+	fmt.Println("EXAMPLE 3")
+	n3 := []int{1,1}
+	e3 := []int{1}
+	r3 := removeDuplicates(n3)
+	fmt.Printf("RESULT 3: %d\n", r3)
+	for i := 0; i < r3; i++ {
+		if n3[i] == e3[i] {
+			fmt.Printf("CORRECT AT %d OF %d\n", i, n3[i])
+	    } else {
+	    	fmt.Printf("INCORRECT AT %d OF %d, SHOULD BE: %d\n", i, n3[i], e3[i])
+	    }
+	}
+	fmt.Printf("\n\n");
 }
