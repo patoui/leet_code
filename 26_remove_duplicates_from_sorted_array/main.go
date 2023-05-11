@@ -16,6 +16,24 @@ func removeDuplicates(nums []int) int {
 	return len(nums)
 }
 
+// most up voted Go solution on LeetCode
+func removeDuplicatesAlt(nums []int) int {
+    ln := len(nums)
+    if ln <= 1 {
+        return ln
+    }
+
+    j := 0 // points to  the index of last filled position
+    for i := 1; i < ln; i++ {
+        if nums[j] != nums[i] {
+            j++
+            nums[j] = nums[i]
+        }
+    }
+
+    return j + 1
+}
+
 func main() {
 	fmt.Println("EXAMPLE 1")
 	n1 := []int{1,1,2}
