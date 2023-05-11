@@ -6,10 +6,10 @@ func removeDuplicates(nums []int) int {
 	copy := nums
 	nums = nums[:0]
 	m := make(map[int]int)
-	for _, v := range(copy) {
-		if _, ok := m[v]; !ok {
-			m[v] = 1
-			nums = append(nums, v)
+	for i := 0; i < len(copy); i++ {
+		if _, ok := m[copy[i]]; !ok {
+			m[copy[i]] = 1
+			nums = append(nums, copy[i])
 		}
 	}
 
