@@ -3,11 +3,6 @@ package main
 import "fmt"
 
 func lengthOfLongestSubstring(s string) int {
-    ln := len(s)
-    if ln <= 1 {
-        return ln
-    }
-
     lg, f, l := 0, 0, 0
     m := make(map[rune]int)
     for i, v := range(s) {
