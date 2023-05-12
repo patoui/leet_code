@@ -4,9 +4,9 @@ import "fmt"
 
 func removeElement(nums []int, val int) int {
     j := 0
-    for i := 0; i < len(nums); i++ {
-        if nums[i] != val {
-            nums[j] = nums[i]
+    for _, v := range(nums) {
+        if v != val {
+            nums[j] = v
             j++
         }
     }
