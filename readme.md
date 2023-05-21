@@ -19,7 +19,6 @@ go run main.go
 
 Steps:
 - change into the problems directory, example `cd 28_find_the_index_of_the_first_occurrence_in_a_string/`
-- generate the profiler output `go test -cpuprofile cpu1.prof -bench .`, this will have created a file name `cpu1.prof`
 - run the command to generate the benchmark output `go test -cpuprofile cpu1.prof -bench .`
 - see visual output `pprof -http=:8080 cpu1.prof`
 
