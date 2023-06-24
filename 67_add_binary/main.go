@@ -14,32 +14,42 @@ func addBinary(a string, b string) string {
         return a
     }
 
-    if al > bl {
-        for i := 0; i < al - bl; i++ {
-            b = "0" + b
-        }
-        bl = al
-    } else if bl > al {
-        for i := 0; i < bl - al; i++ {
-            a = "0" + a
-        }
-        al = bl
-    }
-
     var ae string
     var be string
+    ao := 1
+    bo := 1
     c := ""
     o := ""
 
-    for i := al - 1; i >= 0; i-- {
-        ae = string(a[i])
-        be = string(b[i])
+    for {
+        av := ao > al
+        bv := bo > bl
 
-        if c == "1" && ae == "1" && be == "1" {
-            o = "1" + o
-        } else if ae == "1" && be == "1" {
-            o = "0" + o
-            c = "1"
+        if av && bv {
+            break;
+        }
+
+        if av {
+            ae = "0"
+        } else {
+            ae = string(a[al - ao])
+            ao++
+        }
+
+        if bv {
+            be = "0"
+        } else {
+            be = string(b[bl - bo])
+            bo++
+        }
+
+        if ae == "1" && be == "1" {
+            if c == "1" {
+                o = "1" + o
+            } else {
+                o = "0" + o
+                c = "1"
+            }
         } else if ae == "1" || be == "1" {
             if c == "1" {
                 o = "0" + o
