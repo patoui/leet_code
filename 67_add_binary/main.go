@@ -23,37 +23,38 @@ func addBinary(a string, b string) string {
         for i := 0; i < bl - al; i++ {
             a = "0" + a
         }
+        al = bl
     }
 
     var ae string
     var be string
-    carry := ""
+    c := ""
     o := ""
 
     for i := al - 1; i >= 0; i-- {
         ae = string(a[i])
         be = string(b[i])
 
-        if carry == "1" && ae == "1" && be == "1" {
+        if c == "1" && ae == "1" && be == "1" {
             o = "1" + o
         } else if ae == "1" && be == "1" {
             o = "0" + o
-            carry = "1"
+            c = "1"
         } else if ae == "1" || be == "1" {
-            if carry == "1" {
+            if c == "1" {
                 o = "0" + o
             } else {
                 o = "1" + o
             }
-        } else if carry == "1" {
+        } else if c == "1" {
             o = "1" + o
-            carry = "0"
+            c = "0"
         } else {
             o = "0" + o
         }
     }
 
-    if carry == "1" {
+    if c == "1" {
         o = "1" + o
     }
 
@@ -68,4 +69,8 @@ func main() {
     fmt.Println("EXAMPLE 2")
     r2 := addBinary("1010", "1011")
     fmt.Printf("RESULT 2: %v\n\n", r2)
+
+    fmt.Println("EXAMPLE 3")
+    r3 := addBinary("1", "111")
+    fmt.Printf("RESULT 3: %v\n\n", r3)
 }
